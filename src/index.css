@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Caprasimo", serif;
+  --font-display: "Caprasimo", serif;
+  
+  --color-brand-cream: #f5f2e8;
+  --color-brand-lime: #d9f925;
+  --color-brand-black: #000000;
+  
+  --radius-brutalist: 24px;
+  
+  --shadow-brutalist: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-hover: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-brand-black font-sans antialiased;
+    font-variation-settings: "SOFT" 100, "wght" 600;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-black uppercase leading-none tracking-tight;
+    font-variation-settings: "SOFT" 100, "wght" 900;
+  }
+}
+
+@layer components {
+  .btn-brutalist {
+    @apply px-6 py-3 bg-brand-lime border-2 border-brand-black rounded-full font-display font-black uppercase transition-all shadow-brutalist hover:shadow-brutalist-hover hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px];
+    font-variation-settings: "SOFT" 100, "wght" 800;
+  }
+  
+  .card-brutalist {
+    @apply bg-white border-2 border-brand-black rounded-brutalist p-6 shadow-brutalist transition-all hover:shadow-brutalist-hover hover:translate-x-[2px] hover:translate-y-[2px];
+  }
+}
