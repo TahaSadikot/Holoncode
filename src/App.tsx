@@ -40,11 +40,62 @@ import {
 
 // Scroll to top on route change
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (hash) return;
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
+};
+
+const ScrollToHash = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+
+    const targetId = hash.replace("#", "");
+    const targetElement = document.getElementById(targetId);
+
+    if (!targetElement) return;
+
+    const timer = window.setTimeout(() => {
+      const offset = 112;
+      const elementTop = targetElement.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: Math.max(elementTop - offset, 0), behavior: "smooth" });
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [pathname, hash]);
+
+  return null;
+};
+
+const WhatsAppButton = () => {
+  const message = encodeURIComponent(
+    "Hi HolonCode, I came across your website and would like to discuss a project. Please share the next steps."
+  );
+
+  return (
+    <a
+      href={`https://wa.me/919427030666?text=${message}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+      className="fixed right-4 bottom-4 md:right-6 md:bottom-6 z-50 group"
+    >
+      <div className="flex items-center gap-3 rounded-full border-2 border-brand-black bg-[#25D366] px-4 py-3 text-white shadow-brutalist transition-all duration-200 hover:shadow-brutalist-hover hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px]">
+        <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-black bg-white text-[#25D366]">
+          <MessageSquare className="h-5 w-5" />
+          <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-brand-lime border border-brand-black animate-pulse" />
+        </div>
+        <div className="hidden sm:block text-left">
+          <p className="font-display text-sm font-black uppercase leading-none tracking-tight">WhatsApp</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/90">Quick reply available</p>
+        </div>
+      </div>
+    </a>
+  );
 };
 
 const Navbar = () => {
@@ -54,7 +105,13 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-4">
       <div className="max-w-[1600px] mx-auto flex items-center justify-between bg-white/80 backdrop-blur-md border-2 border-brand-black rounded-full px-4 md:px-6 py-2 md:py-3 shadow-brutalist relative">
         <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-          <div className="w-8 h-8 bg-brand-lime border-2 border-brand-black rounded-lg flex items-center justify-center font-display font-bold text-xl">H</div>
+          <img
+            src="/company_logo.png"
+            alt="Holoncode"
+            loading="lazy"
+            onError={(e) => { (e.target as HTMLImageElement).src = '/logo-placeholder.svg'; }}
+            className="w-8 h-8 object-contain rounded-lg border-2 border-brand-black bg-white"
+          />
           <span className="font-display font-extrabold text-lg md:text-xl tracking-tight">HOLONCODE</span>
         </Link>
         
@@ -103,7 +160,7 @@ const Footer = () => (
       <div className="grid md:grid-cols-4 gap-12 mb-12">
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 bg-brand-lime border-2 border-brand-black rounded-lg flex items-center justify-center font-display font-bold text-xl text-brand-black">H</div>
+            <img src="/company_logo.png" alt="Holoncode" className="w-10 h-10 object-contain rounded-lg border-2 border-brand-black bg-white" />
             <span className="font-display font-extrabold text-2xl tracking-tight">HOLONCODE</span>
           </div>
           <p className="text-gray-400 max-w-sm mb-8">
@@ -2104,6 +2161,7 @@ export default function App() {
     <Router>
       <div className="min-h-screen selection:bg-brand-lime selection:text-brand-black">
         <ScrollToTop />
+        <ScrollToHash />
         <Navbar />
         <AnimatePresence mode="wait">
           <Routes>
@@ -2117,6 +2175,7 @@ export default function App() {
           </Routes>
         </AnimatePresence>
         <Footer />
+        <WhatsAppButton />
       </div>
     </Router>
   );

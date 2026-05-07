@@ -36,6 +36,9 @@
 }
 
 @layer components {
+  .site-logo {
+    @apply w-8 h-8 object-contain rounded-lg border-2 border-brand-black bg-white;
+  }
   .btn-brutalist {
     @apply px-6 py-3 bg-brand-lime border-2 border-brand-black rounded-full font-display uppercase transition-all shadow-brutalist hover:shadow-brutalist-hover hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px];
   }
