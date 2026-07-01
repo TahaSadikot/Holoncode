@@ -82,7 +82,7 @@ const WhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed right-4 bottom-4 md:right-6 md:bottom-6 z-50 group"
+      className="fixed left-4 bottom-4 md:left-6 md:bottom-6 z-50 group"
     >
       <div className="flex items-center gap-3 rounded-full border-2 border-brand-black bg-[#25D366] px-4 py-3 text-white shadow-brutalist transition-all duration-200 hover:shadow-brutalist-hover hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px]">
         <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-black bg-white text-[#25D366]">
